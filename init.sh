@@ -2,12 +2,12 @@
 # sudo apt-get update
 # set env
 #coreutils
-P=$(dirname "$0")
-echo $P
+CUR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+echo $CUR
 ENV="env/entry.sh"
-# exit 0
-if ! grep -qF "source $P/$ENV" "$HOME/.bashrc"; then
-        echo "source $P/$ENV" >> $HOME/.bashrc
+
+if ! grep -qF "source $CUR/$ENV" "$HOME/.bashrc"; then
+        echo "source $CUR/$ENV" >> $HOME/.bashrc
 fi
 
 # generate ssh key
@@ -24,7 +24,8 @@ if [ -f "$HOME/.gitconfig" ]; then
 else
         git config --global user.email $1
         git config --global user.name $2
+        ssh-copy-id $(whoami)@localhost
 fi
 
-ssh-copy-id $(whoami)@localhost
+
 source $HOME/.bashrc
