@@ -29,8 +29,4 @@ for dir in ${DIR[@]}
 do
         mkdir -p $dir
 done
-
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N ""
-echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> ~/.ssh/config
-cat ~/.ssh/id_rsa.pub
 #ssh-copy-id username@remote-server
