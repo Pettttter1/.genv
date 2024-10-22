@@ -21,8 +21,7 @@ if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
 else
         echo "ssh key already exists"
 fi
-echo "would you want to set git config ?[Y/N]"
-read ANSWER
+read -p "would you want to set git config ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         # config git config
         read -p "input your email: " EMAIL
