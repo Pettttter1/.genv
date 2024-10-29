@@ -1,21 +1,24 @@
 #!/bin/bash
 
-if [ ! -d $1 ]
-then
-       mkdir -p $1
+if [ -z $1 ];then
+       echo "input target directory please"
+       exit
 fi
 
-cd $1
+if [ ! -d $1 ]; then
+       echo "directory $1 not exist"
+       exit
+fi
+
 repos=(https://gitlab.freedesktop.org/wayland/wayland.git
        https://gitlab.freedesktop.org/wayland/wayland-protocols.git
        https://gitlab.freedesktop.org/wayland/weston.git)
 
 for repo in ${repos[@]}
 do
-        git clone $repo
+       git clone $repo $1/$(basename $repo .git)
 done
 
-cd -
 # for wayland
-sudo apt install pkg-config libxml2-dev graphviz doxygen xsltproc xmlto \
+sudo apt install -y pkg-config libxml2-dev graphviz doxygen xsltproc xmlto \
 ninja-build expat libffi-dev libwayland-dev
