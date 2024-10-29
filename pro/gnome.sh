@@ -1,7 +1,17 @@
 #!/bin/bash
 URL=https://gitlab.gnome.org/GNOME
-TAR_DIR=~/gnome-shell-pkg
-mkdir -p $TAR_DIR && cd $TAR_DIR
+
+if [ -z $1 ];then
+       echo "input target directory please"
+       exit
+fi
+
+if [ ! -d $1 ]; then
+       echo "directory $1 not exist"
+       exit
+fi
+
+cd $1
 meson_install() {
         git clone $URL/$1.git
         cd $1 && git checkout $2
@@ -45,7 +55,7 @@ sudo apt install -y libunwind-dev
 meson_install glib glib-2-82
 
 # ERROR: Dependency "gjs-1.0" not found, tried pkgconfig and cmake
-sudo apt-get install -y libgjs-dev libpolkit-agent-1-dev libibus-1.0-dev libnm-dev \
+sudo apt install -y libgjs-dev libpolkit-agent-1-dev libibus-1.0-dev libnm-dev \
 asciidoctor asciidoc-base libpulse-dev libgnome-autoar-0-dev sassc
 meson_install gjs gnome-42
 
