@@ -7,10 +7,14 @@ net() {
         sudo ip link set ens33 up && sudo dhclient ens33
         sudo apt update
 }
-PKGS=(
-        plocate
+# process manamgenet
+PROCESS=(
         htop
         btop
+)
+
+PKGS=(
+        plocate
 )
 sudo apt install -y git vim gcc meson cmake pip clang
 # upgrade meson
@@ -35,5 +39,4 @@ done
 
 
 # fzf
-
 curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
