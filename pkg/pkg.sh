@@ -9,6 +9,8 @@ net() {
 }
 PKGS=(
         plocate
+        htop
+        btop
 )
 sudo apt install -y git vim gcc meson cmake pip clang
 # upgrade meson
@@ -30,3 +32,8 @@ do
         mkdir -p $dir
 done
 #ssh-copy-id username@remote-server
+
+
+# fzf
+
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh

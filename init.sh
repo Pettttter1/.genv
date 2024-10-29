@@ -34,5 +34,10 @@ if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         fi
         
 fi
+read -p "would you want to use vim config ?[Y/N]" ANSWER
+if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
+        # config vim config
+        echo "source $CUR/vim/vimrc" >> $HOME/.vimrc
+fi
 
 chmod +x ./pkg.sh && ./pkg.sh
