@@ -40,4 +40,14 @@ if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         echo "source $CUR/vim/vimrc" >> $HOME/.vimrc
 fi
 
+# create dirs
+DIR=(
+        mypro project pkg tmp tools
+        .ssh
+)
+for dir in ${DIR[@]}
+do
+        mkdir -p $HOME/$dir
+done
+
 chmod +x ./pkg.sh && ./pkg.sh

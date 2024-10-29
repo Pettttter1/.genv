@@ -7,13 +7,11 @@ net() {
         sudo ip link set ens33 up && sudo dhclient ens33
         sudo apt update
 }
-# process manamgenet
-PROCESS=(
-        htop
-        btop
-)
 
 PKGS=(
+        # process management
+        htop
+        btop
         plocate
 )
 sudo apt install -y git vim gcc meson cmake pip clang
@@ -24,19 +22,10 @@ sudo apt install -y net-tools openssh-server
 # sudo systemctl enable ssh --now
 # sudo systemctl start ssh
 
-DIR=(
-        ~/project
-        ~/pkg
-        ~/tmp
-        ~/tools
-        ~/.ssh
-)
-for dir in ${DIR[@]}
-do
-        mkdir -p $dir
-done
 #ssh-copy-id username@remote-server
 
-
 # fzf
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+read -p "would you want to install fzf ?[Y/N]" ANSWER
+if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
+        curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+fi
