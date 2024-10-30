@@ -5,10 +5,28 @@
 CUR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 ENV="env/entry.sh"
 
+# add "source $CUR/$ENV >> $HOME/.bashrc" to "~/.bashrc"
 if ! grep -qF "source $CUR/$ENV" "$HOME/.bashrc"; then
         echo "source $CUR/$ENV" >> $HOME/.bashrc
         source $HOME/.bashrc
 fi
+
+# for pip install
+# add "export PATH="$HOME/.local/bin" to "~/.bashrc"
+if ! grep -qF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
+        source $HOME/.bashrc
+fi
+
+# create dirs
+DIR=(
+        mypro project pkg tmp tools
+        .ssh
+)
+for dir in ${DIR[@]}
+do
+        mkdir -p $HOME/$dir
+done
 
 # generate ssh key
 if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
@@ -34,20 +52,14 @@ if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         fi
         
 fi
+
 read -p "would you want to use vim config ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         # config vim config
         echo "source $CUR/vim/vimrc" >> $HOME/.vimrc
 fi
 
-# create dirs
-DIR=(
-        mypro project pkg tmp tools
-        .ssh
-)
-for dir in ${DIR[@]}
-do
-        mkdir -p $HOME/$dir
-done
-
-chmod +x ./pkg.sh && ./pkg.sh
+read -p "would you want to install pkg.sh ?[Y/N]" ANSWER
+if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
+        chmod +x ./pkg.sh && ./pkg.sh
+fi
