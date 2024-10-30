@@ -56,7 +56,7 @@ fi
 read -p "would you want to use vim config ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         # config vim config
-        echo "source $CUR/vim/vimrc" >> $HOME/.vimrc
+        echo "source $CUR/vim/.vimrc" >> $HOME/.vimrc
 fi
 
 read -p "would you want to install pkg.sh ?[Y/N]" ANSWER
