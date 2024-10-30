@@ -42,13 +42,15 @@ if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         if [ $? -ne 0 ]; then
                 git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
                 $HOME/.fzf/install
-                source $HOME/.bashrc
         else
                 echo "fzf already installed"
         fi
+        fzf --version
 fi
 
 # atuin
 # if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
 #         curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 # fi
+
+source $HOME/.bashrc
