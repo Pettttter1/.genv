@@ -10,7 +10,7 @@ if [ ! -d $1 ]; then
        echo "directory $1 not exist"
        exit
 fi
-MAX_TIME=30  # Adjust this value as needed
+MAX_TIME=60  # Adjust this value as needed
 # get vim repo
 sudo apt remove -y vim # remove old vim
 repo_https=https://github.com/vim/vim.git
