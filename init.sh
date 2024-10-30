@@ -18,13 +18,6 @@ if ! grep -qF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
         source $HOME/.bashrc
 fi
 
-# for vimrc
-# add "export PATH="$HOME/.local/bin" to "~/.bashrc"
-if ! grep -qF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.vimrc"; then
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
-        source $HOME/.bashrc
-fi
-
 # create dirs
 DIR=(
         mypro project pkg tmp tools
