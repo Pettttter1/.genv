@@ -11,8 +11,7 @@ if [ ! -d $1 ]; then
 fi
 
 repos=(https://gitlab.freedesktop.org/wayland/wayland.git
-       https://gitlab.freedesktop.org/wayland/wayland-protocols.git
-       https://gitlab.freedesktop.org/wayland/weston.git)
+       https://gitlab.freedesktop.org/wayland/wayland-protocols.git)
 
 for repo in ${repos[@]}
 do
@@ -22,3 +21,11 @@ done
 # for wayland
 sudo apt install -y pkg-config libxml2-dev graphviz doxygen xsltproc xmlto \
 ninja-build expat libffi-dev libwayland-dev
+
+cd $1/wayland
+meson setup build && ninja -C build
+sudo ninja -C build install  
+
+cd $1/wayland-protocols
+meson setup build && ninja -C build
+sudo ninja -C build install

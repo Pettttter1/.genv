@@ -21,10 +21,11 @@ PKGS=(
         htop
         btop
         plocate
+
 )
 echo "The following packages will be installed:"
 for pkg in ${PKGS[@]}; do
-    echo "$pkg"
+        echo "$pkg"
 done
 
 read -p "Do you want to install these packages? (y/n) " ANSWER
