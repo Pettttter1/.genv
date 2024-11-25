@@ -2,7 +2,7 @@
 
 CUR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 files=(
-        util.sh
+        alias.sh
         git.sh
 )
 for file in ${files[@]}
