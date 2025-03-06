@@ -20,8 +20,8 @@ function string_in_file {
 }
 
 # write "source $CUR/$ENV >> $HOME/.bashrc" to $BASHRC
-if ! string_in_file "source $CUR/$ENV" $BASHRC; then
-        echo "source $CUR/$ENV" >> $BASHRC
+if ! string_in_file "source $ENV" $BASHRC; then
+        echo "source $ENV" >> $BASHRC
 fi
 
 # write "export PATH="$HOME/.local/bin" to $BASHRC for pip install
