@@ -21,17 +21,12 @@ string_in_file() {
 
 # write "source $CUR/$ENV >> $HOME/.bashrc" to $BASHRC
 if ! string_in_file "source $CUR/$ENV" $BASHRC; then
-        echo "source $CUR/$ENV" >> $HOME/.bashrc
+        echo "source $CUR/$ENV" >> $BASHRC
 fi
 
 # write "export PATH="$HOME/.local/bin" to $BASHRC for pip install
 if ! string_in_file 'export PATH="$HOME/.local/bin:$PATH"' $BASHRC; then
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
-fi
-
-# write "PubkeyAcceptedKeyTypes +ssh-rsa" to $SSHCONFIG
-if ! string_in_file "PubkeyAcceptedKeyTypes +ssh-rsa" $SSHCONFIG; then
-        echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> $SSHCONFIG
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASHRC
 fi
 
 # apply the change
@@ -46,6 +41,11 @@ for dir in ${DIR[@]}
 do
         mkdir -p $HOME/$dir
 done
+
+# write "PubkeyAcceptedKeyTypes +ssh-rsa" to $SSHCONFIG
+if ! string_in_file "PubkeyAcceptedKeyTypes +ssh-rsa" $SSHCONFIG; then
+        echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> $SSHCONFIG
+fi
 
 # generate ssh key
 if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
