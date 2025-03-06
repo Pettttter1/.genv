@@ -3,12 +3,12 @@ URL=https://gitlab.gnome.org/GNOME
 
 if [ -z $1 ];then
        echo "input target directory please"
-       exit
+       return 0
 fi
 
 if [ ! -d $1 ]; then
        echo "directory $1 not exist"
-       exit
+       return 0
 fi
 
 cd $1

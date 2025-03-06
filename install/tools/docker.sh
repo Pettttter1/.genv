@@ -13,7 +13,6 @@ for ((i=0; i<$TIMES; i++)); do
         fi
 done
 
-
 sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 sudo apt update
