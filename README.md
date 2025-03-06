@@ -40,7 +40,7 @@ chmod +x VMware-Workstation-17.6.3-24583834.x86_64.bundle
 sudo ./VMware-Workstation-17.6.3-24583834.x86_64.bundle
 ```
 
-## 6. [optional] to fix issue (Could not open /dev/vmmon: No such file or directory)
+## 6. fix (Could not open /dev/vmmon: No such file or directory)
 
 save following content to a script and execute it
 ```bash
