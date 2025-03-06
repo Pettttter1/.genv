@@ -6,16 +6,7 @@ repo_https=https://github.com/vim/vim.git
 repo_git=git@github.com:vim/vim.git # if failed use it to try
 VIM_PATH="$HOME/pkg"
 
-read -p "input target directory(absolute path) or use default($DEFAULT_PATH)" TMP_PATH
-if [ "$TMP_PATH" = "Y" ] || [ "$TMP_PATH" = "y" ] || ["$TMP_PATH" = ""]; then
-        VIM_PATH=$TMP_PATH
-fi
-
-if [ ! -d $VIM_PATH ]; then
-       echo "directory $VIM_PATH not exist"
-       return 0
-fi
-
+mkdir -p $VIM_PATH
 # get vim repo
 for ((i=0; i<$TRY_TIMES; i++)); do
         if [ ! -d $VIM_PATH/$(basename $repo_https .git) ]; then
@@ -32,7 +23,7 @@ done
 
 if [ ! -d $VIM_PATH/$(basename $repo_https .git) ]; then
         echo "get vim from $repo_https failed"
-        return 0
+        exit 0
 fi
 
 sudo apt remove -y vim
