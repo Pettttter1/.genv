@@ -4,7 +4,7 @@
 #coreutils
 CUR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 ENV="$CUR/env/entry.sh"
-VIMRC="$CUR/env/.vimrc"
+VIMRC="$HOME/.vimrc"
 BASHRC="$HOME/.bashrc"
 SSHCONFIG="$HOME/.ssh/config"
 INSTALL="$CUR/install"
@@ -27,6 +27,11 @@ fi
 # write "export PATH="$HOME/.local/bin" to $BASHRC for pip install
 if ! string_in_file 'export PATH="$HOME/.local/bin:$PATH"' $BASHRC; then
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASHRC
+fi
+
+# write "source $CUR/env/.vimrc" to $VIMRC
+if ! string_in_file "source $CUR/env/.vimrc" $VIMRC; then
+        echo "source $CUR/env/.vimrc" >> $VIMRC
 fi
 
 # apply the change
@@ -73,9 +78,4 @@ fi
 read -p "would you want to install pkg.sh ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         source $INSTALL/pkg.sh
-fi
-
-read -p "would you want to use .vimrc ?[Y/N]" ANSWER
-if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
-        echo "source $CUR/env/.vimrc" >> $HOME/.vimrc
 fi
