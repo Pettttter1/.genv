@@ -11,8 +11,8 @@ INSTALL="$CUR/install"
 
 # $1: string
 # $2: file_name
-string_not_in_file() {
-        if grep -Fxq "$1" "$2"; then
+function string_in_file {
+        if grep -qF "$1" "$2"; then
                 return 0
         else
                 return 1
@@ -20,12 +20,12 @@ string_not_in_file() {
 }
 
 # write "source $CUR/$ENV >> $HOME/.bashrc" to $BASHRC
-if string_not_in_file "source $CUR/$ENV" $BASHRC; then
+if ! string_in_file "source $CUR/$ENV" $BASHRC; then
         echo "source $CUR/$ENV" >> $BASHRC
 fi
 
 # write "export PATH="$HOME/.local/bin" to $BASHRC for pip install
-if string_not_in_file 'export PATH="$HOME/.local/bin:$PATH"' $BASHRC; then
+if ! string_in_file 'export PATH="$HOME/.local/bin:$PATH"' $BASHRC; then
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASHRC
 fi
 
@@ -43,7 +43,7 @@ do
 done
 
 # write "PubkeyAcceptedKeyTypes +ssh-rsa" to $SSHCONFIG
-if string_not_in_file "PubkeyAcceptedKeyTypes +ssh-rsa" $SSHCONFIG; then
+if ! string_in_file "PubkeyAcceptedKeyTypes +ssh-rsa" $SSHCONFIG; then
         echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> $SSHCONFIG
 fi
 
