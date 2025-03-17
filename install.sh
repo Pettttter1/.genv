@@ -1,16 +1,17 @@
 #!/bin/bash
-# sudo apt-get update
-# set env
-#coreutils
+
 CUR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-ENV="$CUR/env/entry.sh"
 VIMRC="$HOME/.vimrc"
 BASHRC="$HOME/.bashrc"
 SSHCONFIG="$HOME/.ssh/config"
 INSTALL="$CUR/install"
+ALIAS="$CUR/alias.sh"
 
-# $1: string
-# $2: file_name
+cd $HOME
+mkdir -p mypro project pkg tmp tools .ssh
+cd -
+
+# Usage: $1: string $2: file_name
 function string_in_file {
         if grep -qF "$1" "$2"; then
                 return 0
@@ -19,35 +20,24 @@ function string_in_file {
         fi
 }
 
-# write "source $CUR/$ENV >> $HOME/.bashrc" to $BASHRC
-if ! string_in_file "source $ENV" $BASHRC; then
-        echo "source $ENV" >> $BASHRC
-fi
-
-# write "export PATH="$HOME/.local/bin" to $BASHRC for pip install
-if ! string_in_file 'export PATH="$HOME/.local/bin:$PATH"' $BASHRC; then
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASHRC
-fi
-
-# write "source $CUR/env/.vimrc" to $VIMRC
-if ! string_in_file "source $CUR/env/.vimrc" $VIMRC; then
-        echo "source $CUR/env/.vimrc" >> $VIMRC
-fi
-
-# apply the change
-source $HOME/.bashrc
-
-# create dirs
-DIR=(
-        mypro project pkg tmp tools
-        .ssh
+STR=(
+        "source $ALIAS"
+        'export PATH="$HOME/.local/bin:$PATH"'
 )
-for dir in ${DIR[@]}
-do
-        mkdir -p $HOME/$dir
+
+# .bashrc
+for S in "${STR[@]}"; do
+        if ! string_in_file "$S" $BASHRC; then
+                echo $S >> $BASHRC
+        fi
 done
 
-# write "PubkeyAcceptedKeyTypes +ssh-rsa" to $SSHCONFIG
+# .vimrc
+if ! string_in_file "source $CUR/.vimrc" $VIMRC; then
+        echo "source $CUR/.vimrc" >> $VIMRC
+fi
+
+# .ssh/config
 if ! string_in_file "PubkeyAcceptedKeyTypes +ssh-rsa" $SSHCONFIG; then
         echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> $SSHCONFIG
 fi
@@ -58,7 +48,6 @@ if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
         ssh-copy-id $(whoami)@localhost
 fi
 
-# print ssh key
 echo "--------------------ssh public key---------------------"
 cat $HOME/.ssh/id_rsa.pub
 echo "-------------------------------------------------------"
@@ -67,15 +56,28 @@ read -p "would you want to set git config ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
         read -p "input your email: " EMAIL
         read -p "input your name: " NAME
-        if [ -z "$EMAIL" ] || [ -z "$NAME" ]; then
-                echo "email or name cannot be empty continue..."
-        else
-                git config --global user.email $EMAIL
-                git config --global user.name $NAME
-        fi
+        git config --global user.email $EMAIL
+        git config --global user.name $NAME
 fi
 
-read -p "would you want to install pkg.sh ?[Y/N]" ANSWER
+read -p "would you want to install basic packages ?[Y/N]" ANSWER
 if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
-        source $INSTALL/pkg.sh
+        sudo apt update
+        sudo apt install -y git vim gcc meson cmake pip clang
+        sudo python3 -m pip install --upgrade meson pip ninja # upgrade meson
+        sudo apt install -y net-tools openssh-server #network
+        sudo apt install -y htop btop plocate # process
+fi
+
+#fzf
+read -p "would you want to install fzf ?[Y/N]" ANSWER
+if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]; then
+        fzf --version
+        if [ $? -ne 0 ]; then
+                git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+                $HOME/.fzf/install
+        else
+                echo "fzf already installed"
+        fi
+        fzf --version
 fi

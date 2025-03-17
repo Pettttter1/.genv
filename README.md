@@ -29,7 +29,7 @@ reboot and press F2 to enter boot configuration and choose usb drive as first op
 
 ## 4. Configure Ubuntu
 ```bash
-source conf.sh
+source install.sh
 ```
 
 ## 5. install VMware
